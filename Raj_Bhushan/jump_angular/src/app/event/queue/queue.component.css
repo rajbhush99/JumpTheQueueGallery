@@ -1,0 +1,43 @@
+.event-page{
+    background-color: #b7bbbd;
+    }
+    .my-card{
+        margin: 10px;
+        margin-bottom: 5px;
+        border-radius: 2%;
+    }
+    .header-image{
+        width: 100%;
+    }
+    .title{
+        font-weight: bold;
+        font-size: x-large;
+        text-align: center;
+    }
+    .content{
+        
+        text-align: center;
+    }
+    .my-btn{
+        text-align: center;
+    }
+    .count{
+        font-weight: bolder;
+        font-size: 75px;
+    }
+    .btn-wrapper{
+        margin: 10px;
+    
+    }
+    ::ng-deep .success {
+        font-weight: bold;
+        color: blue;
+        background-color: rgb(10, 241, 10);
+      }
+      ::ng-deep .leave {
+        font-weight: bold;
+        font-size: x-large;
+        
+        color: black;
+        background-color: red;
+      }
