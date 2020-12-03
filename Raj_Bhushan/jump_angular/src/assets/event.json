@@ -31,6 +31,22 @@
             "joined": false,
             "estimateTime":4000,
             "myNumber": "Q0037"
+        },
+        {
+            "id": "005",
+            "eventName": "Christmas Party",
+            "currentlyAttended": "Q0014",
+            "joined": false,
+            "estimateTime":4000,
+            "myNumber": "Q0067"
+        },
+        {
+            "id": "006",
+            "eventName": "New year",
+            "currentlyAttended": "Q0018",
+            "joined": false,
+            "estimateTime":3000,
+            "myNumber": "Q0083"
         }
     ]
 }

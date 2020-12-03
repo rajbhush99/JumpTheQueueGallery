@@ -9,3 +9,8 @@
   .full-width {
     width: 100%;
   }
+  ::ng-deep .success {
+    font-weight: bold;
+    /* color: blue; */
+    background-color: rgb(10, 241, 10);
+  }

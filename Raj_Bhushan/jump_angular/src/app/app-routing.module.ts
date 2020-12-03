@@ -16,17 +16,11 @@ const router: Routes = [
    path: 'Register',
    component: RegisterComponent
  },
-//  {
-//     path: 'event/:id',
-//     component: QueueComponent,
-//    canActivate: [AuthGuard]
-//  },
  {
    path: 'event-list',
    component: EventListComponent,
    canActivate: [AuthGuard]
  },
-
  {
   path: '**' , redirectTo: 'login' , pathMatch: 'full'
 }

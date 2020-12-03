@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar} from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/core/security/auth.service';
+import { LoginVisitor } from 'src/app/core/model/shared';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,26 +14,31 @@ export class LoginComponent implements OnInit {
               private authService: AuthService) { }
 
   ngOnInit(): void {
-  
-  }
-
-  loginUser(values: any)
-   {
-    if (true)
-    { 
-      this.snackbar.open('Login success', 'Success', {
-        duration: 3000,
-       }
-      );
-     
-      this.authService.sendToken(values.email);
-      this.route.navigate(['event-list']);
-    } else
-    {
-      this.snackbar.open('Failed to login', 'Error', {
-        duration: 3000,
-        panelClass: ['mat-toolbar', 'mat-warn']}
-      );
+    var value1 = localStorage.getItem('LoggedInUser');
+    if ( value1 != null || value1 !== undefined || value1 !== '') {
+    this.route.navigate(['event-list']);
     }
   }
-}
+  loginUser(values) {
+     const visitor: LoginVisitor = new LoginVisitor();
+     visitor.username = values.email;
+     this.authService.loginVisitor(visitor.username).subscribe(
+       (data) => {
+         if (data.username === values.email && data.password === values.password) {
+           this.authService.setVisitorId(data.id);
+           this.authService.sendToken(data.username);
+           this.route.navigate(['event-list']);
+           this.snackbar.open('Login success', 'ok', {
+             duration : 2000
+           });
+         } else {
+               this.snackbar.open('access error', 'OK', {
+                duration: 2000,
+              });
+         }
+       }
+       );
+      }
+    }
+
+

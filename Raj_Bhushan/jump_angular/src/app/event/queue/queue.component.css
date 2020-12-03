@@ -4,7 +4,10 @@
     .my-card{
         margin: 10px;
         margin-bottom: 5px;
-        border-radius: 2%;
+        /* border-radius: 2%; */
+        border: 55px !important;
+       border-radius: 30px !important;
+       /* border: rgb(41, 238, 15) !important; */
     }
     .header-image{
         width: 100%;
@@ -13,6 +16,12 @@
         font-weight: bold;
         font-size: x-large;
         text-align: center;
+    }
+    .title1{
+        text-align: center;
+        font-weight: bold;
+        font-size: x-large;
+        color: rgb(9, 9, 151);
     }
     .content{
         
@@ -24,6 +33,11 @@
     .count{
         font-weight: bolder;
         font-size: 75px;
+    }
+    .time{
+        color:red;
+        font-weight: bold;
+        font-size: larger
     }
     .btn-wrapper{
         margin: 10px;

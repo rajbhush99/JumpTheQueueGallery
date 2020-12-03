@@ -22,13 +22,15 @@
       </mat-form-field>
       <mat-form-field class="full-width">
         <mat-label>Name</mat-label>
-        <input type="text" matInput placeholder="Name" name="name" #name="ngModel" ngModel required>
+        <input type="text" matInput placeholder="Name" name="name"  pattern="^[A-Z]+[a-z A-Z]*$"
+        #name="ngModel" ngModel required>
         <mat-error *ngIf="name.errors?.required">Name is required</mat-error>
+        <mat-error *ngIf="name.errors?.pattern">First letter should be capital</mat-error>
       </mat-form-field>
 
       <mat-form-field class="full-width">
         <mat-label>Phone Number</mat-label>
-        <input matInput placeholder="phone" name="phoneNumber" type="phone" 
+        <input matInput placeholder="phone" name="phoneNumber" type="phone" pattern="[789][0-9]{9}"
         #phone="ngModel" ngModel required>
         <mat-error *ngIf="phone.errors?.required">Phone is required</mat-error>
         <mat-error *ngIf="phone.errors?.pattern">Phone number must be of 10 digit</mat-error>
