@@ -1,6 +1,6 @@
 package com.devonfw.application.jtqj.eventmanagement.common.api;
 
-import java.time.Duration;
+import java.sql.Timestamp;
 
 import com.devonfw.application.jtqj.general.common.api.ApplicationEntity;
 
@@ -57,10 +57,33 @@ public interface Event extends ApplicationEntity {
   public void setCustomers(int customers);
 
   /**
-   * @param attentionTime setter for attentionTime attribute
+   * @return startDateId
    */
-  public void setAttentionTime(Duration attentionTime);
+  public Timestamp getStartDate();
 
-  public Duration getAttentionTime();
+  /**
+   * @param startDate setter for startDate attribute
+   */
+  public void setStartDate(Timestamp startDate);
+
+  /**
+   * @return endDateId
+   */
+  public Timestamp getEndDate();
+
+  /**
+   * @param endDate setter for endDate attribute
+   */
+  public void setEndDate(Timestamp endDate);
+
+  /**
+   * @return minAttentionTimeId
+   */
+  public Timestamp getMinAttentionTime();
+
+  /**
+   * @param minAttentionTime setter for minAttentionTime attribute
+   */
+  public void setMinAttentionTime(Timestamp minAttentionTime);
 
 }

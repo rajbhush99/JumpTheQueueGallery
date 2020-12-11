@@ -20,7 +20,6 @@ export class QueueComponent implements OnInit, OnChanges {
   public visitorId: any;
   event: Event = null;
   queueDetail: QueueDetail = null;
-  queueId1 = 0;
   @Input() id: any;
   constructor(
     private queueService: QueueService,
@@ -32,6 +31,7 @@ export class QueueComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.getEventDetails();
   }
+  queuetime:number;
   ngOnInit(): void {
   }
 
@@ -49,8 +49,10 @@ export class QueueComponent implements OnInit, OnChanges {
     });
   }
   onJoinQueue(eventId) {
+    console.log(eventId);
     this.queueService.joinQueue(eventId, this.authService.getVisitorId()).subscribe((data) => {
       this.queueDetail = data;
+      console.log(data);
       const user = this.getCurrentUser();
       const temp =  { queueNumber : this.queueDetail.queueNumber,
                    queueId: this.queueDetail.id ,
@@ -65,32 +67,40 @@ export class QueueComponent implements OnInit, OnChanges {
       );
      });
   }
+
   getEstimatedTime() {
-    // const current = parseInt(this.event.currentNumber.substring(1));
-    // const queue1 = this.getMyNumberFromLocal();
-    // const queue = parseInt(queue1.substring(1));
-    // const difference = (queue - current) * 120;
-    // return difference;
-    // const time  = parseInt(this.queueDetail.minEstimatedTime);
-    // return time;
     const user = this.getCurrentUser();
     const temp = localStorage.getItem(user + '#' + this.event.id);
     if (temp == null) {
      return '';
    }
     const temp1 = JSON.parse(localStorage.getItem(user + '#'  + this.event.id));
-    return temp1.minEstimatedTime;
+        const currentTime = new Date().getTime();
+        const estimatedTime = new Date(temp1.minEstimatedTime).getTime();
+        const diff = estimatedTime - currentTime;
+        const hr = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const min = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const sec = Math.floor((diff % (1000 * 60)) / (1000)) +min*60 + hr*60*60
+    if(diff<0)
+    {
+      return 0;
+    } else{
+      return sec;
+    }
   }
 
 
-  onLeaveQueue(id) {
-    this.queueService.leaveQueue(id).subscribe((data) => {
+  onLeaveQueue(queueId) {
+    console.log(queueId);
+    this.queueService.leaveQueue(queueId).subscribe((data) => {
+      console.log(queueId + ' has been deleted successfully')
         const user = this.getCurrentUser();
         localStorage.removeItem(user + '#' + this.event.id);
         this.snackbar.open('Leave the event', '', {
           duration: 2000,
           panelClass: ['leave'],
-        });   });
+        });
+     });
   }
 
   getMyNumberFromLocal() {

@@ -102,13 +102,6 @@ public interface EventRepository extends DefaultRepository<EventEntity> {
               query.orderBy($(alias.getCurrentNumber()).desc());
             }
             break;
-          case "attentionTime":
-            if (next.isAscending()) {
-              query.orderBy($(alias.getAttentionTime()).asc());
-            } else {
-              query.orderBy($(alias.getAttentionTime()).desc());
-            }
-            break;
 
           case "customers":
             if (next.isAscending()) {

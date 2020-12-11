@@ -73,8 +73,11 @@ public interface QueueDetail extends ApplicationEntity {
   /**
    * @param minEstimatedTime setter for minEstimatedTime attribute
    */
-  public void setMinEstimatedTime(String minEstimatedTime);
+  public void setMinEstimatedTime(Timestamp minEstimatedTime);
 
-  public String getMinEstimatedTime();
+  /**
+   * @return minEstimatedTime
+   */
+  public Timestamp getMinEstimatedTime();
 
 }

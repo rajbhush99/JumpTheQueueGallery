@@ -62,11 +62,4 @@ public class EventmanagementImpl extends AbstractComponentFacade implements Even
 
   }
 
-  @Override
-  public void increaseCurrentlyAttended(long eventId) {
-
-    this.ucManageEvent.increaseCurrentlyAttended(eventId);
-
-  }
-
 }

@@ -37,11 +37,4 @@ public interface UcManageEvent {
    */
   void increaseEventCustomer(long eventId);
 
-  /**
-   *
-   * Increase currently being attended
-   *
-   * @param eventId
-   */
-  void increaseCurrentlyAttended(long eventId);
 }

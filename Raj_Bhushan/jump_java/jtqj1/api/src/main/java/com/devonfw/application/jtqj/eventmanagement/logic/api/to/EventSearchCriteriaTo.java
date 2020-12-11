@@ -1,5 +1,6 @@
 package com.devonfw.application.jtqj.eventmanagement.logic.api.to;
 
+import java.sql.Timestamp;
 import java.time.Duration;
 
 import com.devonfw.application.jtqj.general.common.api.to.AbstractSearchCriteriaTo;
@@ -33,6 +34,12 @@ public class EventSearchCriteriaTo extends AbstractSearchCriteriaTo {
   private StringSearchConfigTo descriptionOption;
 
   private StringSearchConfigTo currentNumberOption;
+
+  private Timestamp startDate;
+
+  private Timestamp endDate;
+
+  private Timestamp minAttentionTime;
 
   /**
    * @return eventNameId
@@ -200,6 +207,54 @@ public class EventSearchCriteriaTo extends AbstractSearchCriteriaTo {
   public void setAttentionTime(Duration attentionTime) {
 
     this.attentionTime = attentionTime;
+  }
+
+  /**
+   * @return startDateId
+   */
+  public Timestamp getStartDate() {
+
+    return this.startDate;
+  }
+
+  /**
+   * @param startDate setter for startDate attribute
+   */
+  public void setStartDate(Timestamp startDate) {
+
+    this.startDate = startDate;
+  }
+
+  /**
+   * @return endDateId
+   */
+  public Timestamp getEndDate() {
+
+    return this.endDate;
+  }
+
+  /**
+   * @param endDate setter for endDate attribute
+   */
+  public void setEndDate(Timestamp endDate) {
+
+    this.endDate = endDate;
+  }
+
+  /**
+   * @return minAttentionTimeId
+   */
+  public Timestamp getMinAttentionTime() {
+
+    return this.minAttentionTime;
+  }
+
+  /**
+   * @param minAttentionTime setter for minAttentionTime attribute
+   */
+  public void setMinAttentionTime(Timestamp minAttentionTime) {
+
+    this.minAttentionTime = minAttentionTime;
   }
 
 }

@@ -31,7 +31,7 @@ public class EventmanagementTest extends ComponentTest {
     this.eventEto.setEventName("Butter Cup");
     this.eventEto.setLogo(null);
     this.eventEto.setCurrentNumber("Q001");
-    this.eventEto.setAttentionTime(null);
+    this.eventEto.setMinAttentionTime(null);
     this.eventEto.setCustomers(2);
   }
 

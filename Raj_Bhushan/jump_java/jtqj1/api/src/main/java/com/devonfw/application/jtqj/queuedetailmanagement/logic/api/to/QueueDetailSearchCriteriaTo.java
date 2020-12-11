@@ -1,7 +1,6 @@
 package com.devonfw.application.jtqj.queuedetailmanagement.logic.api.to;
 
 import java.sql.Timestamp;
-import java.time.Duration;
 
 import com.devonfw.application.jtqj.general.common.api.to.AbstractSearchCriteriaTo;
 import com.devonfw.module.basic.common.api.query.StringSearchConfigTo;
@@ -28,7 +27,7 @@ public class QueueDetailSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
   private StringSearchConfigTo queueNumberOption;
 
-  private Duration minEstimatedTime;
+  private String minEstimatedTime;
 
   /**
    * @return queueNumberId
@@ -149,7 +148,7 @@ public class QueueDetailSearchCriteriaTo extends AbstractSearchCriteriaTo {
   /**
    * @return minEstimatedTimeId
    */
-  public Duration getMinEstimatedTime() {
+  public String getMinEstimatedTime() {
 
     return this.minEstimatedTime;
   }
@@ -157,7 +156,7 @@ public class QueueDetailSearchCriteriaTo extends AbstractSearchCriteriaTo {
   /**
    * @param minEstimatedTime setter for minEstimatedTime attribute
    */
-  public void setMinEstimatedTime(Duration minEstimatedTime) {
+  public void setMinEstimatedTime(String minEstimatedTime) {
 
     this.minEstimatedTime = minEstimatedTime;
   }

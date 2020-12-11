@@ -5,6 +5,7 @@ import javax.inject.Named;
 
 import org.springframework.data.domain.Page;
 
+import com.devonfw.application.jtqj.eventmanagement.logic.api.to.EventEto;
 import com.devonfw.application.jtqj.general.logic.base.AbstractComponentFacade;
 import com.devonfw.application.jtqj.queuedetailmanagement.logic.api.Queuedetailmanagement;
 import com.devonfw.application.jtqj.queuedetailmanagement.logic.api.to.QueueDetailCto;
@@ -79,6 +80,12 @@ public class QueuedetailmanagementImpl extends AbstractComponentFacade implement
 
     this.ucManageQueueDetail.leaveQueue(queueDetailId);
 
+  }
+
+  @Override
+  public EventEto getEventDetailById(long eventId) {
+
+    return this.ucManageQueueDetail.getEventDetailById(eventId);
   }
 
 }

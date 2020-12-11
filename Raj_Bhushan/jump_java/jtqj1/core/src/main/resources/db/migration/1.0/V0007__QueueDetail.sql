@@ -5,7 +5,7 @@ CREATE TABLE QueueDetail(
   creationTime TIMESTAMP,
   startTime TIMESTAMP,
   endTime TIMESTAMP,
-  minEstimatedTime VARCHAR(255),
+  minEstimatedTime TIMESTAMP,
    idVisitor BIGINT NOT NULL,
     idEvent BIGINT NOT NULL,
      CONSTRAINT PK_QueueDetail PRIMARY KEY(id),

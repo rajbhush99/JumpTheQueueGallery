@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import com.devonfw.application.jtqj.eventmanagement.logic.api.Eventmanagement;
+import com.devonfw.application.jtqj.eventmanagement.logic.api.to.EventEto;
 import com.devonfw.application.jtqj.queuedetailmanagement.dataaccess.api.QueueDetailEntity;
 import com.devonfw.application.jtqj.queuedetailmanagement.logic.api.Queuedetailmanagement;
 import com.devonfw.application.jtqj.queuedetailmanagement.logic.api.to.QueueDetailEto;
@@ -45,19 +46,72 @@ public class UcManageQueueDetailImpl extends AbstractQueueDetailUc implements Uc
   @Override
   public void deleteQueueDetail(long queueDetailId) {
 
-    // long eventId = getQueueDetailRepository().find(queueDetailId).getEventId();
-    // this.eventmanagement.decreaseEventCustomer(eventId);
-    // LOG.debug("The event with id '{}' has decreased its customers.", eventId);
-    //
-    // // then we delete the queueDetail
-    // getQueueDetailRepository().deleteById(queueDetailId);
-    // LOG.debug("The queuedetail with id '{}' has been deleted.", queueDetailId);
+    QueueDetailEntity queue = getQueueDetailRepository().find(queueDetailId);
+    getQueueDetailRepository().delete(queue);
+    LOG.debug("The queue with id '{}' has been deleted.", queueDetailId);
   }
 
   @Override
   public QueueDetailEto saveQueueDetail(QueueDetailEto queueDetail) {
 
     return Objects.requireNonNull(queueDetail, "queueDetail");
+  }
+
+  public Eventmanagement getEventmanagement() {
+
+    return this.eventmanagement;
+  }
+
+  public Queuedetailmanagement getQueuedetailmanagement() {
+
+    return this.queuedetailmanagement;
+  }
+
+  @Override
+  public QueueDetailEto joinQueue(QueueDetailEto queueDetail) {
+
+    QueueDetailEntity queueDetailEntity = getBeanMapper().map(queueDetail, QueueDetailEntity.class);
+
+    long eventEntityId = queueDetailEntity.getEventId();
+
+    EventEto event = getEventDetailById(eventEntityId);
+
+    List<QueueDetailEto> queueDetailEtosInEvent = getQueueDetailEtosInEvent(eventEntityId);
+    // if there are no ETOs, we set the ticket to the first code
+    // else we get the digit of the last ticket in the list and generate a new code for the ticket
+    if (queueDetailEtosInEvent.isEmpty()) {
+      queueDetailEntity.setQueueNumber("Q001");
+    } else {
+      QueueDetailEto lastQueueDetail = queueDetailEtosInEvent.get(queueDetailEtosInEvent.size() - 1);
+      int lastQueueDigit = Integer.parseInt(lastQueueDetail.getQueueNumber().substring(1));
+      queueDetailEntity.setQueueNumber(generateQueueNumber(lastQueueDigit));
+    }
+    queueDetailEntity.setCreationTime(Timestamp.from(Instant.now()));
+    queueDetailEntity.setStartTime(event.getStartDate());
+    queueDetailEntity.setEndTime(event.getEndDate());
+    queueDetailEntity.setMinEstimatedTime(getQueueEstimatedTime(eventEntityId, queueDetailEntity.getQueueNumber()));
+
+    // save access code
+    QueueDetailEntity queueDetailEntitySaved = getQueueDetailRepository().save(queueDetailEntity);
+
+    getEventmanagement().increaseEventCustomer(queueDetailEntitySaved.getEventId());
+    LOG.debug("The event with id '{}' has increased its customers.", queueDetailEntitySaved.getEventId());
+    return getBeanMapper().map(queueDetailEntitySaved, QueueDetailEto.class);
+
+  }
+
+  /**
+   * @param eventEntityId
+   * @return
+   */
+  private List<QueueDetailEto> getQueueDetailEtosInEvent(long eventEntityId) {
+
+    QueueDetailSearchCriteriaTo queueDetailSearchcriteriaTo = new QueueDetailSearchCriteriaTo();
+    queueDetailSearchcriteriaTo.setEventId(eventEntityId);
+    Pageable pageable = PageRequest.of(0, 1000);
+    queueDetailSearchcriteriaTo.setPageable(pageable);
+    return getQueuedetailmanagement().findQueueDetailEtos(queueDetailSearchcriteriaTo).getContent();
+
   }
 
   /**
@@ -84,82 +138,33 @@ public class UcManageQueueDetailImpl extends AbstractQueueDetailUc implements Uc
     return newQueueCode;
   }
 
-  public Eventmanagement getEventmanagement() {
+  /**
+   * @param eventId
+   * @param queueNo
+   * @return Minimum estimated time for that queue number
+   */
+  public Timestamp getQueueEstimatedTime(long eventId, String queueNo) {
 
-    return this.eventmanagement;
-  }
-
-  public Queuedetailmanagement getQueuedetailmanagement() {
-
-    return this.queuedetailmanagement;
+    String currentlyAttended = getEventmanagement().findEvent(eventId).getCurrentNumber();
+    int currently = Integer.parseInt(currentlyAttended.substring(1));
+    int queue = Integer.parseInt(queueNo.substring(1));
+    long currentTime = Timestamp.from(Instant.now()).getTime();
+    Timestamp queueTime = new Timestamp(currentTime + (queue - currently) * 120000);
+    return queueTime;
   }
 
   @Override
-  public QueueDetailEto joinQueue(QueueDetailEto queueDetail) {
+  public EventEto getEventDetailById(long eventId) {
 
-    QueueDetailEntity queueDetailEntity = getBeanMapper().map(queueDetail, QueueDetailEntity.class);
-
-    long eventEntityId = queueDetailEntity.getEventId();
-    long visitorEntityId = queueDetailEntity.getVisitorId();
-    System.out.println(eventEntityId);
-    System.out.println(visitorEntityId);
-    QueueDetailSearchCriteriaTo queueDetailSearchcriteriaTo = new QueueDetailSearchCriteriaTo();
-    queueDetailSearchcriteriaTo.setEventId(eventEntityId);
-    // queueDetailSearchcriteriaTo.setVisitorId(visitorEntityId);
-    Pageable pageable = PageRequest.of(0, 1000);
-    queueDetailSearchcriteriaTo.setPageable(pageable);
-
-    List<QueueDetailEto> queueDetailEtosInEvent = getQueuedetailmanagement()
-        .findQueueDetailEtos(queueDetailSearchcriteriaTo).getContent();
-    // if there are no ETOs, we set the ticket to the first code
-    // else we get the digit of the last ticket in the list and generate a new code for the ticket
-    if (queueDetailEtosInEvent.isEmpty()) {
-      queueDetailEntity.setQueueNumber("Q001");
-    } else {
-      QueueDetailEto lastQueueDetail = queueDetailEtosInEvent.get(queueDetailEtosInEvent.size() - 1);
-      int lastQueueDigit = Integer.parseInt(lastQueueDetail.getQueueNumber().substring(1));
-      queueDetailEntity.setQueueNumber(generateQueueNumber(lastQueueDigit));
-    }
-    queueDetailEntity.setCreationTime(Timestamp.from(Instant.now()));
-    queueDetailEntity.setStartTime(null);
-    queueDetailEntity.setEndTime(null);
-    queueDetailEntity.setMinEstimatedTime(getEstimatedTime(eventEntityId, queueDetailEntity.getQueueNumber()));
-
-    // save access code
-    QueueDetailEntity queueDetailEntitySaved = getQueueDetailRepository().save(queueDetailEntity);
-
-    LOG.debug("The queuedetail with id '{}' has been saved.", queueDetailEntitySaved.getId());
-    /**
-     * Using the method getEventmanagement() gives access to the methods that were created earlier in the usecasemanage
-     * (inside the event component). This is done so each component takes care of its own modifications.
-     */
-    getEventmanagement().increaseEventCustomer(queueDetailEntitySaved.getEventId());
-    LOG.debug("The event with id '{}' has increased its customers.", queueDetailEntitySaved.getEventId());
-    return getBeanMapper().map(queueDetailEntitySaved, QueueDetailEto.class);
-
-  }
-
-  private String getEstimatedTime(long eventId, String queueNo) {
-
-    String currentlyAttended = getEventmanagement().findEvent(eventId).getCurrentNumber();
-    // System.out.println(currentlyAttended);
-    int currently = Integer.parseInt(currentlyAttended.substring(1));
-    int queue = Integer.parseInt(queueNo.substring(1));
-    // System.out.println(queue);
-    int result = (queue - currently) * 120;
-    // System.out.println(result);
-    return Integer.toString(result);
+    return getEventmanagement().findEvent(eventId);
   }
 
   @Override
   public void leaveQueue(long queueDetailId) {
 
     long eventId = getQueueDetailRepository().find(queueDetailId).getEventId();
-    this.eventmanagement.decreaseEventCustomer(eventId);
-    this.eventmanagement.increaseCurrentlyAttended(eventId);
+    getEventmanagement().decreaseEventCustomer(eventId);
     LOG.debug("The event with id '{}' has decreased its customers.", eventId);
-
-    // then we delete the queueDetail
     getQueueDetailRepository().deleteById(queueDetailId);
     LOG.debug("The queuedetail with id '{}' has been deleted.", queueDetailId);
   }

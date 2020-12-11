@@ -63,6 +63,11 @@ public interface QueuedetailmanagementRestService {
   @Path("/queuedetail/joinqueue/")
   public QueueDetailEto joinQueue(QueueDetailEto queuedetail);
 
+  /**
+   * Delegates to {@link Queuedetailmanagement#deleteQueueDetail}.
+   *
+   * @param id ID of the {@link QueueDetailEto} to be deleted
+   */
   @DELETE
   @Path("/queuedetail/leavequeue/{id}/")
   public void leaveQueue(@PathParam("id") long id);

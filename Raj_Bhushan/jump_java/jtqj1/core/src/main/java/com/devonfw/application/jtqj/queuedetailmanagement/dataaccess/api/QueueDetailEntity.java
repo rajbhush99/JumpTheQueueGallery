@@ -37,7 +37,8 @@ public class QueueDetailEntity extends ApplicationPersistenceEntity implements Q
   @Temporal(TemporalType.TIMESTAMP)
   private Timestamp endTime;
 
-  private String minEstimatedTime;
+  @Temporal(TemporalType.TIMESTAMP)
+  private Timestamp minEstimatedTime;
 
   private VisitorEntity visitor;
 
@@ -198,14 +199,14 @@ public class QueueDetailEntity extends ApplicationPersistenceEntity implements Q
   }
 
   @Override
-  public void setMinEstimatedTime(String i) {
+  public void setMinEstimatedTime(Timestamp i) {
 
     this.minEstimatedTime = i;
 
   }
 
   @Override
-  public String getMinEstimatedTime() {
+  public Timestamp getMinEstimatedTime() {
 
     return this.minEstimatedTime;
   }

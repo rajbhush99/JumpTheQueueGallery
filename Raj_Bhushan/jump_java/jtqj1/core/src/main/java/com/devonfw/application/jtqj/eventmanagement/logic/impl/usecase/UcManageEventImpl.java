@@ -53,7 +53,6 @@ public class UcManageEventImpl extends AbstractEventUc implements UcManageEvent 
   public void decreaseEventCustomer(long eventId) {
 
     EventEntity eventEntity = getEventRepository().find(eventId);
-
     eventEntity.setCustomers(eventEntity.getCustomers() - 1);
     getEventRepository().save(eventEntity);
 
@@ -66,27 +65,6 @@ public class UcManageEventImpl extends AbstractEventUc implements UcManageEvent 
     eventEntity.setCustomers(eventEntity.getCustomers() + 1);
     getEventRepository().save(eventEntity);
 
-  }
-
-  @Override
-  public void increaseCurrentlyAttended(long eventId) {
-
-    // EventEntity eventEntity = getEventRepository().find(eventId);
-    // String current = eventEntity.getCurrentNumber();
-    // String current1 = current.substring(1);
-    // int no = Integer.parseInt(current1);
-    //
-    // int newQueueDigit = no + 1;
-    // String newQueueCode = "";
-    // StringBuilder stringBuilder = new StringBuilder();
-    // stringBuilder.append(newQueueDigit);
-    // while (stringBuilder.length() < 3) {
-    // stringBuilder.insert(0, "0");
-    // }
-    // stringBuilder.insert(0, "Q");
-    // newQueueCode = stringBuilder.toString();
-    // eventEntity.setCurrentNumber(newQueueCode);
-    // getEventRepository().save(eventEntity);
   }
 
 }

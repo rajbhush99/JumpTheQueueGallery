@@ -1,6 +1,6 @@
 package com.devonfw.application.jtqj.eventmanagement.logic.api.to;
 
-import java.time.Duration;
+import java.sql.Timestamp;
 
 import com.devonfw.application.jtqj.eventmanagement.common.api.Event;
 import com.devonfw.module.basic.common.api.to.AbstractEto;
@@ -20,9 +20,13 @@ public class EventEto extends AbstractEto implements Event {
 
   private String currentNumber;
 
-  private Duration attentionTime;
-
   private int customers;
+
+  private Timestamp startDate;
+
+  private Timestamp endDate;
+
+  private Timestamp minAttentionTime;
 
   @Override
   public String getEventName() {
@@ -139,13 +143,6 @@ public class EventEto extends AbstractEto implements Event {
     } else if (!this.currentNumber.equals(other.currentNumber)) {
       return false;
     }
-    if (this.attentionTime == null) {
-      if (other.attentionTime != null) {
-        return false;
-      }
-    } else if (!this.attentionTime.equals(other.attentionTime)) {
-      return false;
-    }
 
     if (this.customers != other.customers) {
       return false;
@@ -154,15 +151,39 @@ public class EventEto extends AbstractEto implements Event {
   }
 
   @Override
-  public void setAttentionTime(Duration attentionTime) {
+  public Timestamp getStartDate() {
 
-    this.attentionTime = attentionTime;
+    return this.startDate;
   }
 
   @Override
-  public Duration getAttentionTime() {
+  public void setStartDate(Timestamp startDate) {
 
-    return this.attentionTime;
+    this.startDate = startDate;
+  }
+
+  @Override
+  public Timestamp getEndDate() {
+
+    return this.endDate;
+  }
+
+  @Override
+  public void setEndDate(Timestamp endDate) {
+
+    this.endDate = endDate;
+  }
+
+  @Override
+  public Timestamp getMinAttentionTime() {
+
+    return this.minAttentionTime;
+  }
+
+  @Override
+  public void setMinAttentionTime(Timestamp minAttentionTime) {
+
+    this.minAttentionTime = minAttentionTime;
   }
 
 }

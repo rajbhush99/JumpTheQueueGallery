@@ -24,7 +24,7 @@ public class QueueDetailEto extends AbstractEto implements QueueDetail {
 
   private Long eventId;
 
-  private String minEstimatedTime;
+  private Timestamp minEstimatedTime;
 
   @Override
   public String getQueueNumber() {
@@ -176,13 +176,13 @@ public class QueueDetailEto extends AbstractEto implements QueueDetail {
   }
 
   @Override
-  public String getMinEstimatedTime() {
+  public Timestamp getMinEstimatedTime() {
 
     return this.minEstimatedTime;
   }
 
   @Override
-  public void setMinEstimatedTime(String minEstimatedTime) {
+  public void setMinEstimatedTime(Timestamp minEstimatedTime) {
 
     this.minEstimatedTime = minEstimatedTime;
   }

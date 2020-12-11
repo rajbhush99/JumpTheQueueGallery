@@ -1,9 +1,18 @@
 package com.devonfw.application.jtqj.queuedetailmanagement.logic.api.usecase;
 
+import com.devonfw.application.jtqj.eventmanagement.logic.api.to.EventEto;
 import com.devonfw.application.jtqj.queuedetailmanagement.logic.api.to.QueueDetailEto;
 
 /**
  * Interface of UcManageQueueDetail to centralize documentation and signatures of methods.
+ */
+/**
+ * @author rajbhush
+ *
+ */
+/**
+ * @author rajbhush
+ *
  */
 public interface UcManageQueueDetail {
 
@@ -31,6 +40,19 @@ public interface UcManageQueueDetail {
    */
   QueueDetailEto joinQueue(QueueDetailEto queueDetail);
 
+  /**
+   * LeaveQueue method Deletes an queueDetail from the database by its ID 'queueDetailId'. Decreases the count of
+   * customers of the event assigned to the queueDetail by one.
+   *
+   * @param queueDetailId
+   */
+
   void leaveQueue(long queueDetailId);
+
+  /**
+   * @param eventId
+   * @return EventDetail of particular EventId
+   */
+  EventEto getEventDetailById(long eventId);
 
 }

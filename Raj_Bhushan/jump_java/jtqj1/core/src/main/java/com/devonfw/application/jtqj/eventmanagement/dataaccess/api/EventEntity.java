@@ -1,9 +1,11 @@
 package com.devonfw.application.jtqj.eventmanagement.dataaccess.api;
 
-import java.time.Duration;
+import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.devonfw.application.jtqj.eventmanagement.common.api.Event;
 import com.devonfw.application.jtqj.general.dataaccess.api.ApplicationPersistenceEntity;
@@ -23,7 +25,14 @@ public class EventEntity extends ApplicationPersistenceEntity implements Event {
 
   private String currentNumber;
 
-  private Duration attentionTime;
+  @Temporal(TemporalType.TIMESTAMP)
+  private Timestamp startDate;
+
+  @Temporal(TemporalType.TIMESTAMP)
+  private Timestamp endDate;
+
+  @Temporal(TemporalType.TIMESTAMP)
+  private Timestamp minAttentionTime;
 
   private int customers;
 
@@ -120,16 +129,42 @@ public class EventEntity extends ApplicationPersistenceEntity implements Event {
   }
 
   @Override
-  public void setAttentionTime(Duration attentionTime) {
+  public Timestamp getStartDate() {
 
-    this.attentionTime = attentionTime;
+    return this.startDate;
+  }
+
+  @Override
+  public void setStartDate(Timestamp startDate) {
+
+    this.startDate = startDate;
 
   }
 
   @Override
-  public Duration getAttentionTime() {
+  public Timestamp getEndDate() {
 
-    return this.attentionTime;
+    return this.endDate;
+  }
+
+  @Override
+  public void setEndDate(Timestamp endDate) {
+
+    this.endDate = endDate;
+
+  }
+
+  @Override
+  public Timestamp getMinAttentionTime() {
+
+    return this.minAttentionTime;
+  }
+
+  @Override
+  public void setMinAttentionTime(Timestamp minAttentionTime) {
+
+    this.minAttentionTime = minAttentionTime;
+
   }
 
 }
