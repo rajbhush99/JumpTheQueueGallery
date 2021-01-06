@@ -48,9 +48,10 @@ export class QueueComponent implements OnInit, OnChanges {
       }
     });
   }
-  onJoinQueue(eventId) {
+   onJoinQueue(eventId) {
     console.log(eventId);
-    this.queueService.joinQueue(eventId, this.authService.getVisitorId()).subscribe((data) => {
+    this.queueService.joinQueue(eventId, this.authService.getVisitorId())
+    .then((data) => {
       this.queueDetail = data;
       console.log(data);
       const user = this.getCurrentUser();
@@ -59,7 +60,7 @@ export class QueueComponent implements OnInit, OnChanges {
                   minEstimatedTime: this.queueDetail.minEstimatedTime};
       localStorage.setItem(user + '#' + this.event.id, JSON.stringify(temp)) ;
       this.snackbar.open(
-        'Succefully joined the queue ', '',
+        'Successfully joined the queue ', '',
         {
           duration: 2000,
           panelClass: ['success'],
@@ -92,7 +93,7 @@ export class QueueComponent implements OnInit, OnChanges {
 
   onLeaveQueue(queueId) {
     console.log(queueId);
-    this.queueService.leaveQueue(queueId).subscribe((data) => {
+    this.queueService.leaveQueue(queueId).then((data) => {
       console.log(queueId + ' has been deleted successfully')
         const user = this.getCurrentUser();
         localStorage.removeItem(user + '#' + this.event.id);
@@ -116,8 +117,8 @@ export class QueueComponent implements OnInit, OnChanges {
 
   getQueueIdFromLocal() {
     const user = this.getCurrentUser();
-    const a = localStorage.getItem(user + '#' + this.event.id);
-    if ( a == null) {
+    const temp = localStorage.getItem(user + '#' + this.event.id);
+    if ( temp == null) {
      return '';
    }
     const abc = JSON.parse(localStorage.getItem(user + '#' + this.event.id));

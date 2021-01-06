@@ -4,7 +4,7 @@ import { Event } from '../../../core/model/event';
 import { Observable } from 'rxjs';
 import { FilterEvent, Pageable, QueueDetail } from '../../../core/model/shared';
 import { environment } from 'src/environments/environment';
-import { map } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/security/auth.service';
 
 @Injectable({
@@ -31,13 +31,16 @@ private baseUrl = environment.baseUrlRestServices;
      );
    }
 
-  leaveQueue(queuedetailId: number): Observable<any> {
-   return this.http.delete<QueueDetail>(`${this.baseUrl}` + '/queuedetailmanagement/v1/queuedetail/leavequeue/' + queuedetailId + '/');
+   async leaveQueue(queuedetailId: number) {
+   const leave=await this.http.delete<QueueDetail>(`${this.baseUrl}` + '/queuedetailmanagement/v1/queuedetail/leavequeue/' + queuedetailId + '/').toPromise();
+    return leave;
   }
-  joinQueue(eventId: number , visitorId: number ): Observable<any> {
+
+     async joinQueue(eventId: number , visitorId: number ) {
      const queuedetail: QueueDetail = new QueueDetail();
      queuedetail.eventId = eventId;
      queuedetail.visitorId = visitorId;
-     return this.http.post<QueueDetail>(`${this.baseUrl}` + '/queuedetailmanagement/v1/queuedetail/joinqueue/', queuedetail);
+     const result = await this.http.post<QueueDetail>(`${this.baseUrl}` + '/queuedetailmanagement/v1/queuedetail/joinqueue/', queuedetail).toPromise()
+     return result;
   }
 }
