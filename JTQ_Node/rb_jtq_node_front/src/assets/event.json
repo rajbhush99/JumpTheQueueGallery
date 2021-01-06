@@ -1,0 +1,52 @@
+{
+    "events": [
+        {
+            "id": "001",
+            "eventName": "Butter Cup",
+            "currentlyAttended": "Q0001",
+            "joined": false,
+            "estimateTime":3600,
+            "myNumber": "Q0023"
+        },
+        {
+            "id": "002",
+            "eventName": "Indigo",
+            "currentlyAttended": "Q0005",
+            "joined": false,
+            "estimateTime":5400,
+            "myNumber": "Q0015"
+        },
+        {
+            "id": "003",
+            "eventName": "Fallas of Valencia",
+            "currentlyAttended": "Q0021",
+            "joined": false,
+            "estimateTime":4000,
+            "myNumber": "Q0044"
+        },
+        {
+            "id": "004",
+            "eventName": "Saint John's Eve",
+            "currentlyAttended": "Q0011",
+            "joined": false,
+            "estimateTime":4000,
+            "myNumber": "Q0037"
+        },
+        {
+            "id": "005",
+            "eventName": "Christmas Party",
+            "currentlyAttended": "Q0014",
+            "joined": false,
+            "estimateTime":4000,
+            "myNumber": "Q0067"
+        },
+        {
+            "id": "006",
+            "eventName": "New year",
+            "currentlyAttended": "Q0018",
+            "joined": false,
+            "estimateTime":3000,
+            "myNumber": "Q0083"
+        }
+    ]
+}

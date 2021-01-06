@@ -1,0 +1,20 @@
+<mat-sidenav-container>
+    <mat-sidenav #sidenav>
+           <mat-toolbar class="heading">EVENTS</mat-toolbar>
+      <mat-nav-list class="nav">
+       
+        <!-- <a *ngFor="let event of allEvents" mat-list-item  [ngStyle]="{'background-color':isJoined(event.id) === true ? 'Chartreuse' : 'white' }" -->
+        <a *ngFor="let event of allEvents" mat-list-item  [ngClass]="{'events': isJoined(event.id)===true}"
+        (click)="selectEvent(event.id) && sidenav.toggle()">{{event.eventname}}  
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content style="height: 100vh;">
+        <mat-toolbar color="primary">
+          <button mat-icon-button aria-label="Menu" (click)="sidenav.open()">
+            <mat-icon>menu</mat-icon>
+          </button>
+        </mat-toolbar>
+         <app-queue [id]="this.selectedEventId"></app-queue>
+    </mat-sidenav-content>
+  </mat-sidenav-container>

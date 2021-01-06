@@ -1,0 +1,33 @@
+//import { Exclude } from 'class-transformer';
+import { Column, Entity } from 'typeorm';
+import { BaseEntity } from '../../../../shared/model/entities/base-entity.entity';
+
+
+@Entity()
+export class Event extends BaseEntity {
+  // @Column('varchar', { length: 255, nullable: false })
+  // username!: string;
+
+  // @Column('varchar', { length: 255, nullable: false })
+  // @Exclude({ toPlainOnly: true })
+  // password!: string;
+
+  // @Column('int', { nullable: false, default: roles.USER })
+  // role!: number;
+  id!: number;
+  @Column('varchar', { length: 255, nullable: false })
+  eventname!: string;
+  @Column('varchar', { length: 255, nullable: false })
+  logo!: string;
+  @Column('varchar', { length: 255, nullable: false })
+  currentNumber!: string;
+  @Column('varchar', { length: 255, nullable: false })
+  startDate!: string;
+  @Column('varchar', { length: 255, nullable: false })
+  endDate!: string;
+  @Column('varchar', { length: 255, nullable: false })
+  minAttentionTime!: string;
+  @Column('int', {  nullable: false })
+  customers!: number;
+
+}

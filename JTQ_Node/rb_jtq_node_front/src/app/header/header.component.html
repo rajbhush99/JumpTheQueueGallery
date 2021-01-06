@@ -1,0 +1,20 @@
+<mat-toolbar color="primary" >
+  <mat-toolbar-row fxLayoutAlign="space-between center">
+    <div >
+      <button mat-button>
+        <mat-icon>home</mat-icon>
+        <span class="logo">Jump the Queue</span>
+      </button>
+    </div>
+    <div>
+      <button mat-icon-button mdTooltip="Log out" (click)="logout()" *ngIf="authService.isLoggedIn()">
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar-row>
+  <mat-toolbar-row fxLayoutAlign="space-between end" *ngIf="!authService.isLoggedIn()">
+    <button  mat-button routerLink="/login" routerLinkActive="active">&nbsp;LOGIN</button>
+    <button  mat-button routerLink="/Register" routerLinkActive="active">REGISTER</button>
+
+  </mat-toolbar-row>
+</mat-toolbar>

@@ -1,0 +1,41 @@
+<div class="event-page">
+  <div *ngIf="this.event != undefined || this.event">
+    <img class="header-image" src="assets/images/jumptheq.png">
+    <mat-card>
+      <mat-card-title class="title1">{{this.event.eventname}}</mat-card-title>
+    </mat-card>
+    <mat-card class="my-card" *ngIf="this.getMyNumberFromLocal()">
+      <mat-card-title class="title">Your AccessCode</mat-card-title>
+      <mat-card-content class="content">
+        <div class="count">{{this.getMyNumberFromLocal()}}</div>
+        <div class="row">
+          <h2 >Currently estimate time: <countdown class="time" [config]="{leftTime: this.getEstimatedTime()}">
+            </countdown>
+          </h2>
+         
+        </div>
+      </mat-card-content>
+
+    </mat-card>
+    <mat-card class="my-card">
+      <mat-card-title class="title">Currently Being Attended</mat-card-title>
+      <mat-card-content class="content">
+        <div class="count">{{event.currentNumber}}</div>
+        <div class="btn-wrapper">
+          <button *ngIf="this.getMyNumberFromLocal()" mat-raised-button (click)="onLeaveQueue(this.getQueueIdFromLocal())" color="primary"
+            class="my-btn">Leave the queue</button>
+
+          <button *ngIf="!(this.getMyNumberFromLocal())" mat-raised-button (click)="onJoinQueue(event.id)" color="primary"
+            class="my-btn">Join the queue</button>
+
+        </div>
+      </mat-card-content>
+
+    </mat-card>
+
+  </div>
+  <mat-card class="my-card" *ngIf="this.event == null || this.event == undefined">
+    <!-- <mat-card-title class="title">The queue is not active try again later.</mat-card-title> -->
+    <mat-card-title class="title">Welcome to JumpTheQueue</mat-card-title>
+  </mat-card>
+</div>
