@@ -5,39 +5,45 @@ import { QueueDetail } from '../model/entities/QueueDetail.entity';
 import { QueueDTO } from '../model/dto/queue.dto';
 import { Event } from '../../event/model/entities/event.entity';
 import { subtract } from 'lodash';
+import { Visitor } from '../../user/model/entities/visitor.entity';
 
 
 @Injectable()
 export class QueueService{
    
    constructor(@InjectRepository(QueueDetail) private readonly queueRepository: Repository<QueueDetail>,
-   @InjectRepository(Event) private readonly eventRepository: Repository<Event> ) {}
+   @InjectRepository(Event) private readonly eventRepository: Repository<Event> ,
+   @InjectRepository(Visitor) private readonly visitorRepository: Repository<Visitor>) {}
 
       async joinQueue(queue1: QueueDTO): Promise<QueueDetail>{
       const eId = queue1.eventId;
-      const visitorId = queue1.visitorId;
-         console.log(eId);
-       const eventDetail:Event|undefined = await this.getEventDetailById(eId);
+       const visitorId = queue1.visitorId;
+       const eventDetail:Event|any = await this.getEventDetailById(eId);
+       
        const queue:QueueDetail = new QueueDetail();
        queue.queueNumber ="Q035";
        queue.startTime = eventDetail!.startDate;
        queue.endTime = eventDetail!.endDate;
        queue.minEstimatedTime= await this.getMinimumEstimatedTime(eventDetail!.currentNumber,queue.queueNumber );
-       queue.idVisitor = visitorId;
-       queue.Idevent = eId;
-
+       this.visitorRepository.findOne(visitorId).then(data=>{
+         if(data!=null){
+        queue.visitor=data;}
+      })
+      this.eventRepository.findOne(eId).then(data=>{
+        if(data!=null){
+          queue.event=data;
+        }
+      })
       const result  = await this.queueRepository.save(queue);
       console.log(result);
       return result;
       }
-
       async getEventDetailById(eId:any):Promise<Event|undefined>{
-           console.log('3')
-         const eventDetail =  this.eventRepository.findOne(eId);
-         console.log(eventDetail)
+         const eventDetail = await this.eventRepository.findOne(eId);
+         //Promise is showing pending
          return eventDetail;
      }
-
+     
      async getMinimumEstimatedTime(currentNumber:String ,queueNumber:String):Promise<any>{
            
           const currently = parseInt(currentNumber.substr(1));
@@ -45,6 +51,10 @@ export class QueueService{
           const currentTime  = new Date().getTime();
           const queueTime =currentTime + subtract(queue1,currently)*12000;
           return queueTime;
+     }
+     async getListOfQueue(eId:any):Promise<QueueDetail[]>{
+       const list = await (await this.queueRepository.find(eId));
+       return list;
      }
 
      async leaveQueue(id:number):Promise<any>{

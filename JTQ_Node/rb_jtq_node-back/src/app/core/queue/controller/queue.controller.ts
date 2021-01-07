@@ -11,14 +11,12 @@ export class QueueController {
 
   @Post('joinQueue')
   async joinQueue(@Body() queue1: QueueDTO): Promise<QueueDetail>{
-    const queue2 = await this.queueService.joinQueue(queue1);
-    console.log(queue2)
-    return queue2;
+    const queueResult = await this.queueService.joinQueue(queue1);
+    return queueResult;
   }
 
   @Delete('leavequeue/:id')
   async leaveQueue(@Param('id') id:number):Promise<any>{
-    console.log(id);
     return await this.queueService.leaveQueue(id);
     
   }

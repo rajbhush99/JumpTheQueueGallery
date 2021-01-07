@@ -25,9 +25,6 @@ export class UserService {
       throw new Error('User already exists');
     }
 
-   // const salt = await genSalt(12);
-   // const hashPass = await hash(user.password, salt);
-
     return plainToClass(
       Visitor,
       await this.userRepository.save(user)

@@ -1,5 +1,9 @@
 
-import { Column, Entity} from 'typeorm';
+import { Event } from 'src/app/core/event/model/entities/event.entity';
+import { Visitor } from 'src/app/core/user/model/entities/visitor.entity';
+// import { Event } from 'src/app/core/event/model/entities/event.entity';
+// import { Visitor } from 'src/app/core/user/model/entities/visitor.entity';
+import { Column, Entity, JoinColumn, ManyToOne} from 'typeorm';
 import { BaseEntity } from '../../../../shared/model/entities/base-entity.entity';
 
 @Entity()
@@ -12,10 +16,16 @@ export class QueueDetail extends BaseEntity {
   startTime!: string;
   @Column('varchar', { length: 255, nullable: false })
   endTime!: string;
-  //@Column('', { length: 255, nullable: false })
+  @Column('datetime', { nullable: true })
   minEstimatedTime!:any;
 
-  idVisitor!: number;
+  @ManyToOne(() => Visitor)
+  @JoinColumn({ name: 'idVisitor', referencedColumnName: 'id' })
+  visitor!:Visitor;
   
-  Idevent!: number
+  @ManyToOne(() => Event)
+  @JoinColumn({ name: 'idEvent', referencedColumnName: 'id' })
+  event!:Event;
+ 
+
 }
