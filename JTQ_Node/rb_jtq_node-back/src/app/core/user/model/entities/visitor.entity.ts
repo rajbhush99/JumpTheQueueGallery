@@ -1,12 +1,8 @@
-
 import { Column, Entity } from 'typeorm';
 import { BaseEntity } from '../../../../shared/model/entities/base-entity.entity';
-
-
 @Entity()
 export class Visitor extends BaseEntity {
- 
-  id!: number;
+
   @Column('varchar', { length: 255, nullable: false })
   username!: string;
   @Column('varchar', { length: 255, nullable: false })
@@ -15,9 +11,9 @@ export class Visitor extends BaseEntity {
   phoneNumber!: string;
   @Column('varchar', { length: 255, nullable: false })
   acceptedCommercial!: boolean;
-  @Column('varchar', { length: 255, nullable: false })
+  @Column('boolean',{nullable: false })
   acceptedTerms!: boolean;
-  @Column('varchar', { length: 255, nullable: false })
+  @Column('boolean', {nullable: false })
   userType!: boolean;
   @Column('varchar', { length: 255, nullable: false })
   password!: string;

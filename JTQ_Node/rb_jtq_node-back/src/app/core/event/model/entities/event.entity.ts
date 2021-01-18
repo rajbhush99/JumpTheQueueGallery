@@ -1,11 +1,8 @@
 import { Column, Entity } from 'typeorm';
 import { BaseEntity } from '../../../../shared/model/entities/base-entity.entity';
-
-
 @Entity()
 export class Event extends BaseEntity {
  
-  id!: number;
   @Column('varchar', { length: 255, nullable: false })
   eventname!: string;
   @Column('varchar', { length: 255, nullable: false })
@@ -20,5 +17,4 @@ export class Event extends BaseEntity {
   minAttentionTime!: string;
   @Column('int', {  nullable: false })
   customers!: number;
-
 }

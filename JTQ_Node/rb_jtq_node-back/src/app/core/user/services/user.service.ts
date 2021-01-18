@@ -1,11 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Visitor } from '../model/entities/visitor.entity';
-//import { genSalt, hash } from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
-//import { roles } from '../../auth/model/roles.enum';
 import { plainToClass } from 'class-transformer';
-
 @Injectable()
 export class UserService {
   constructor(@InjectRepository(Visitor) private readonly userRepository: Repository<Visitor>) {}
@@ -20,11 +17,9 @@ export class UserService {
 
   async registerUser(user: Visitor): Promise<Visitor> {
     const actualUser = await this.findOne(user.username!);
-
     if (actualUser) {
       throw new Error('User already exists');
     }
-
     return plainToClass(
       Visitor,
       await this.userRepository.save(user)

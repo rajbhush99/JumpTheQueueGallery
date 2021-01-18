@@ -1,6 +1,4 @@
-import { Visitor } from "../entities/visitor.entity";
-
-export class LoginResponse extends Visitor{
+export class LoginResponse  {
     id!:number;
     username!:string;
 }

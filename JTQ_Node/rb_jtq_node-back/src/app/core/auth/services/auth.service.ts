@@ -3,11 +3,9 @@ import { classToPlain } from 'class-transformer';
 import { UserService } from '../../user/services/user.service';
 import { Visitor } from '../../user/model/entities/visitor.entity';
 import { LoginDTO } from '../model/login.dto';
-
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UserService,
-     ) {}
+  constructor(private readonly usersService: UserService) {}
 
   async validateUser(username: string, pass: string): Promise<Visitor |undefined> {
     const user = await this.usersService.findOne(username);

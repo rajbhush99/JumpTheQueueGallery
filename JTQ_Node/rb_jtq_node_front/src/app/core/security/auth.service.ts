@@ -46,6 +46,7 @@ export class AuthService {
     filters.username = username;
     filters.password = password;
    console.log(filters)
-    return this.http.post<Visitor>(`${this.baseUrl}` + '/auth/login', filters);
+   // return this.http.post<Visitor>(`${this.baseUrl}` + '/auth/login',{});
+    return this.http.post<Visitor>(`${this.baseUrl}` + '/auth/login',filters);
    }
 }

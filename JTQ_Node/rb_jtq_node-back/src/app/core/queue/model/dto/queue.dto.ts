@@ -1,6 +1,5 @@
-import { QueueDetail } from "../entities/QueueDetail.entity";
 
-export class QueueDTO extends QueueDetail{
+export class QueueDTO {
     eventId!:number ;
     visitorId!: number;
 }
