@@ -19,11 +19,11 @@ export class LoginComponent implements OnInit {
     this.route.navigate(['event-list']);
     }
   }
-  loginUser(values) {
+  async loginUser(values) {
      const visitor: LoginVisitor = new LoginVisitor();
      visitor.username = values.email;
-     this.authService.loginVisitor(visitor.username, values.password).subscribe(
-       (data) => {
+     let data =await this.authService.loginVisitor(visitor.username, values.password)
+    // .subscribe( (data) => {
          console.log(data);
          if (data!=null) {
            this.authService.setVisitorId(data.id);
@@ -38,8 +38,8 @@ export class LoginComponent implements OnInit {
               });
          }
        }
-       );
-      }
+    //   );
+    //  }
     }
 
 

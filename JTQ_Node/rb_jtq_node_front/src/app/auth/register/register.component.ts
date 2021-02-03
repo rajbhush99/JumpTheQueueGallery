@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
   }
-registerUser(values) {
+ async registerUser(values) {
   const visitor: Visitor = new Visitor();
   visitor.username = values.username;
   visitor.name =  values.name;
@@ -25,8 +25,10 @@ registerUser(values) {
   visitor.acceptedCommercial = values.acceptedCommercial;
   visitor.acceptedTerms = values.acceptedTerms;
   visitor.userType = false;
-  this.authService.registerVisitor(visitor).subscribe(
-    (data) => {
+  try{
+  let data = await this.authService.registerVisitor(visitor)
+  // .subscribe(
+  //   (data) => {
       console.log(visitor);
       console.log(data);
       if(data==null){
@@ -40,12 +42,18 @@ registerUser(values) {
           panelClass: ['success'],
         }
       );
-      this.router.navigate(['login']);}
-    },
-    (err) => this.snackbar.open(err.error.message, 'OK', {
-      duration: 5000,
-    })
-  );
+      this.router.navigate(['login']);
+      }
+    }catch(e){
+      this.snackbar.open(e.message,'OK',{
+        duration: 5000,
+      })
+    }
+  }
 }
-}
+  //   },
+  //   (err) => this.snackbar.open(err.error.message, 'OK', {
+  //     duration: 5000,
+  //   })
+  // );
 

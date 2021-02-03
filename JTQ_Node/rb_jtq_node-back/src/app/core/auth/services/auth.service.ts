@@ -3,14 +3,14 @@ import { classToPlain } from 'class-transformer';
 import { UserService } from '../../user/services/user.service';
 import { Visitor } from '../../user/model/entities/visitor.entity';
 import { LoginDTO } from '../model/login.dto';
+import { compare } from 'bcrypt';
 @Injectable()
 export class AuthService {
   constructor(private readonly usersService: UserService) {}
 
   async validateUser(username: string, pass: string): Promise<Visitor |undefined> {
     const user = await this.usersService.findOne(username);
-
-    if(user?.username===username && user?.password===pass){ 
+    if(user!.username===username && await compare(pass ,user!.password)){ 
       return classToPlain(user) as Visitor;
     }
     return undefined;

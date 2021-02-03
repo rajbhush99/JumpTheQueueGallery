@@ -13,8 +13,8 @@ export class QueueController {
   }
 
   @Delete('leavequeue/:id')
-  async leaveQueue(@Param('id') id:number):Promise<any>{
-    return await this.queueService.leaveQueue(id);
+  async leaveQueue(@Param('id') id:number):Promise<void>{
+     await this.queueService.leaveQueue(id);
   }
 
    @Get('fetch/:id')

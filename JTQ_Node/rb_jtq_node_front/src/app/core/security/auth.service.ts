@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -36,17 +35,15 @@ export class AuthService {
   }
 
 
-    registerVisitor(visitor: Visitor): Observable<any>{
-     return this.http.post<Visitor>(`${this.baseUrl}` + '/auth/register', visitor);
+    async registerVisitor(visitor: Visitor){
+      return await this.http.post<Visitor>(`${this.baseUrl}` + '/auth/register', visitor).toPromise();
    }
 
 
-    loginVisitor(username: string, password:string): Observable<any>{
+   async loginVisitor(username: string, password:string){
     const filters: FilterVisitor = new FilterVisitor();
     filters.username = username;
     filters.password = password;
-   console.log(filters)
-   // return this.http.post<Visitor>(`${this.baseUrl}` + '/auth/login',{});
-    return this.http.post<Visitor>(`${this.baseUrl}` + '/auth/login',filters);
+    return await this.http.post<Visitor>(`${this.baseUrl}` + '/auth/login',filters).toPromise();
    }
 }

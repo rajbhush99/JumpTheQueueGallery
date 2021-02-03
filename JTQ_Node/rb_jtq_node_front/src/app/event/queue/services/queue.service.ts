@@ -16,16 +16,9 @@ private baseUrl = environment.baseUrlRestServices;
    constructor( private http: HttpClient, private authService: AuthService){}
 
    // this method will Fetch all the events detail
-   getAllEvents(): Observable<any> {
-  
-    const r = this.http.get<Event>(`${this.baseUrl}` + '/event/allEvent')
-    console.log(r)
+   async getAllEvents(){
+    const r = await this.http.get<any>(`${this.baseUrl}` + '/event/allEvent').toPromise()
     return r;
-    // .pipe(
-
-    //      // tslint:disable-next-line: no-string-literal
-    //      map(events => events['content']),
-    //  );
    }
 
    async leaveQueue(queuedetailId: number) {

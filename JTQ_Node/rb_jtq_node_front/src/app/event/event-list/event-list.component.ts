@@ -16,7 +16,7 @@ export class EventListComponent implements OnInit {
 
   }
   ngOnInit() {
-        this.queueService.getAllEvents().subscribe(data => {
+        this.queueService.getAllEvents().then(data => {
           console.log(data);
         this.allEvents =  data;
         console.log(this.allEvents)

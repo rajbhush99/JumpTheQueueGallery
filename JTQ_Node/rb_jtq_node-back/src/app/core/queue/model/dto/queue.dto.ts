@@ -1,5 +1,5 @@
 
-export class QueueDTO {
-    eventId!:number ;
-    visitorId!: number;
+export interface QueueDTO {
+    eventId:number ,
+    visitorId: number
 }

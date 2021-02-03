@@ -39,19 +39,17 @@ export class QueueComponent implements OnInit, OnChanges {
  getCurrentUser() {
   return localStorage.getItem('LoggedInUser');
 }
-  getEventDetails() {
-    this.queueService.getAllEvents().subscribe((data) => {
-      for (const event of data) {
+ async  getEventDetails() {
+   let data = await this.queueService.getAllEvents()
+      for (let event of data) {
         if (event.id === this.id) {
           this.event = event;
         }
       }
-    });
   }
-   onJoinQueue(eventId) {
+   async onJoinQueue(eventId) {
     console.log(eventId);
-    this.queueService.joinQueue(eventId, this.authService.getVisitorId())
-    .then((data) => {
+    let data  = await this.queueService.joinQueue(eventId, this.authService.getVisitorId())
       this.queueDetail = data;
       console.log(data);
       const user = this.getCurrentUser();
@@ -66,7 +64,6 @@ export class QueueComponent implements OnInit, OnChanges {
           panelClass: ['success'],
         }
       );
-     });
   }
 
   getEstimatedTime() {
@@ -91,9 +88,9 @@ export class QueueComponent implements OnInit, OnChanges {
   }
 
 
-  onLeaveQueue(queueId) {
+  async onLeaveQueue(queueId) {
     console.log(queueId);
-    this.queueService.leaveQueue(queueId).then((data) => {
+    let data = await this.queueService.leaveQueue(queueId)
       console.log(queueId + ' has been deleted successfully')
         const user = this.getCurrentUser();
         localStorage.removeItem(user + '#' + this.event.id);
@@ -101,7 +98,6 @@ export class QueueComponent implements OnInit, OnChanges {
           duration: 2000,
           panelClass: ['leave'],
         });
-     });
   }
 
   getMyNumberFromLocal() {
